@@ -43,3 +43,13 @@ To upgrade this PoC to a production-ready system, we will execute the following 
 *   **Steps**:
     1.  **GitHub Actions**: Set up CI/CD to run `dvc repro` and tests on every commit.
     2.  **Model Registry Policy**: Implement a tagging strategy (e.g., promote models from `Staging` -> `Production`).
+
+### Phase 4: Model Performance Optimization (Priority: Medium)
+*   **Goal**: Improve accuracy (reduce MAE < $40k).
+*   **Steps**:
+    1.  **Advanced Algorithms**: Switch from Random Forest to **XGBoost** or **LightGBM** for better gradient boosting performance.
+    2.  **Hyperparameter Tuning**: Use **Optuna** to automatically find the best parameters (e.g., learning rate, depth).
+    3.  **Detailed Feature Engineering**:
+        *   **Geolocation**: Use OneMap API to get Lat/Long for every block.
+        *   **Distance Features**: Calculate distance to nearest MRT, CBD, and Primary Schools.
+        *   **Economic Indicators**: Incorporate COW (Cash Over Valuation) trends or interest rates if available.
