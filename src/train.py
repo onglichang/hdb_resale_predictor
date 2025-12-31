@@ -43,6 +43,23 @@ class DateFeatureEngineering(BaseEstimator, TransformerMixin):
             # For now keep it, but we won't use it in ColumnTransformer.
         return X
 
+def create_pipeline(numerical_features, categorical_features):
+    """
+    Creates the training pipeline.
+    """
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', StandardScaler(), numerical_features),
+            ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=True), categorical_features)
+        ])
+
+    pipeline = Pipeline(steps=[
+        ('feat_eng', DateFeatureEngineering()),
+        ('preprocessor', preprocessor),
+        ('model', RandomForestRegressor(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1))
+    ])
+    return pipeline
+
 def train():
     if not os.path.exists(PROCESSED_DATA_PATH):
         print(f"Processed data not found at {PROCESSED_DATA_PATH}")
@@ -68,27 +85,11 @@ def train():
     # We cannot check if they exist in X.columns here for validation.
     # So we remove the list comprehension check for derived features.
     categorical_features = [c for c in categorical_features if c in X.columns]
-    # numerical_features = [c for c in numerical_features if c in X.columns] 
-
+    
     print(f"Cat features: {categorical_features}")
     print(f"Num features: {numerical_features}")
 
-    # Build Pipeline
-    # Step 1: Feature Engineering
-    # Step 2: Preprocessing (Encoding/Scaling) -> This operates on the OUTPUT of Step 1
-    # Step 3: Model
-
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ('num', StandardScaler(), numerical_features),
-            ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=True), categorical_features)
-        ])
-
-    pipeline = Pipeline(steps=[
-        ('feat_eng', DateFeatureEngineering()),
-        ('preprocessor', preprocessor),
-        ('model', RandomForestRegressor(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1))
-    ])
+    pipeline = create_pipeline(numerical_features, categorical_features)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 

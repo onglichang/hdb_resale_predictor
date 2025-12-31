@@ -6,5 +6,7 @@ fastapi
 uvicorn
 requests
 pandera
+pytest
+httpx
 python-multipart
 xlsxwriter
