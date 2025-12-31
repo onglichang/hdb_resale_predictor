@@ -1,7 +1,7 @@
 # Project Status & Roadmap: HDB Resale Prediction MLOps
 
 **Date:** 2025-12-31
-**Current Stage:** Prototype / PoC (Phase 1 Complete)
+**Current Stage:** Production Ready / Beta (Phase 2 Complete)
 
 ## 1. Current Status
 
@@ -9,14 +9,15 @@ We have established a functional **MLOps Infrastructure Skeleton** with **Robust
 
 ### ✅ Capabilities
 *   **Infrastructure**: Git, DVC (Data Version Control), and MLflow are configured and integrated.
-*   **Reproducibility**: The pipeline (`ingest` -> `preprocess` -> `train`) is fully reproducible via `dvc repro`.
+*   **Reproducibility**: The pipeline (`ingest` -> `validate` -> `preprocess` -> `train`) is fully reproducible via `dvc repro`.
+*   **Data Quality**: Strict schema validation ensures no corrupt data enters the model.
+*   **Containerization**: Dockerized API ready for deployment.
 *   **Experiment Tracking**: Training runs, metrics (MAE, RMSE), and model artifacts are automatically logged to MLflow.
-*   **Robust Serving**: The API serves predictions using a full Scikit-Learn Pipeline, automatically handling data cleaning, date parsing, and one-hot encoding for raw JSON inputs.
-*   **Feature Engineering**: Custom transformers handle date derivation (`month` -> `year`, `month_num`) automatically.
+*   **Robust Serving**: The API serves predictions using a full Scikit-Learn Pipeline.
 
-### ⚠️ Known Limitations (The "Gap" to Production)
-*   **Manual Ingestion**: Data ingestion relies on manual download or placement of the CSV file.
-*   **No Input Validation**: The API does not validate if input values (e.g., `town`, `flat_type`) are valid.
+### ⚠️ Known Limitations
+*   **Feature Completeness**: Model does not yet use Geolocation or Distance features (Phase 4).
+*   **Ingestion Reliability**: Data.gov.sg API changes often require manual intervention for the ingestion step (partially automated).
 
 ---
 
@@ -31,12 +32,12 @@ To upgrade this PoC to a production-ready system, we will execute the following 
     2.  [x] **Artifact Persistence**: Log the *full pipeline* (Preprocessor + Model) to MLflow.
     3.  [x] **Update `serve.py`**: Load the full pipeline to automatically transform raw JSON inputs into predictions.
 
-### Phase 2: Reliability & Automation (Priority: Medium)
+### Phase 2: Reliability & Automation (Priority: Medium) - ✅ COMPLETED
 *   **Goal**: Remove manual steps and prevent bad data.
 *   **Steps**:
-    1.  **Automated Ingestion**: Implement a robust script to automatically fetch/update data from Data.gov.sg (handling API keys or stable URLs).
-    2.  **Data Validation**: Integrate **Pandera** or **Great Expectations** to validate input data quality before training.
-    3.  **Containerization**: Create a `Dockerfile` to package the environment for consistent deployment.
+    1.  [x] **Automated Ingestion**: Implemented `src/ingest.py` to fetch data (with robust fallback manual instructions if API fails).
+    2.  [x] **Data Validation**: Integrated **Pandera** to enforce schema checks (e.g., Price > 0) in the pipeline.
+    3.  [x] **Containerization**: Created `Dockerfile` and `docker-compose.yml` for production-ready deployment.
 
 ### Phase 3: CI/CD & Operations (Priority: Low)
 *   **Goal**: Automate testing and deployment.
