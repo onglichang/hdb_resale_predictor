@@ -22,11 +22,8 @@ def preprocess():
     df['year'] = df['month'].dt.year
     df['month_num'] = df['month'].dt.month
     
-    # Simple encoding for categorical variables (just for demo)
-    # Ideally, use OneHotEncoder or similar in a pipeline
-    categorical_cols = ['town', 'flat_type', 'flat_model', 'storey_range']
-    for col in categorical_cols:
-        df[col] = df[col].astype('category').cat.codes
+    # NOTE: Encoding is now handled in the training pipeline.
+    # We save "clean" data with original string categories.
 
     os.makedirs(os.path.dirname(PROCESSED_DATA_PATH), exist_ok=True)
     df.to_csv(PROCESSED_DATA_PATH, index=False)

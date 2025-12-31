@@ -9,21 +9,21 @@ stages:
       size: 21930465
     - path: src/preprocess.py
       hash: md5
-      md5: 6e381df05732d8f4ae515efbea173ad7
-      size: 1158
+      md5: e3354f61acdf68e20734753da5148c01
+      size: 995
     outs:
     - path: data/processed/resale-flat-prices-processed.csv
       hash: md5
-      md5: c622492e928dc74200c33a81ad249257
-      size: 18621172
+      md5: 86f75445144c949e2f15ce0f1eb5d50d
+      size: 24777016
   train:
     cmd: venv/bin/python src/train.py
     deps:
     - path: data/processed/resale-flat-prices-processed.csv
       hash: md5
-      md5: c622492e928dc74200c33a81ad249257
-      size: 18621172
+      md5: 86f75445144c949e2f15ce0f1eb5d50d
+      size: 24777016
     - path: src/train.py
       hash: md5
-      md5: 64a58873051c6e44f820d9512daad65f
-      size: 1693
+      md5: 4fc948ca50e60554c4e8045812d14c50
+      size: 4428

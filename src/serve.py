@@ -51,20 +51,17 @@ def predict(flat: HDBFlat):
     # For a real MLOps system, the preprocessor should be saved (e.g. pickle) and loaded.
     
     if MODEL:
-        # NOTE: This fails to handle categorical encoding correctly as we don't have the encoders.
-        # Ideally, we should load a preprocessing pipeline here.
-        # For now, we will just print that we are predicting (or fail and return fallback).
         try:
              # Construct DataFrame
             data = pd.DataFrame([flat.dict()])
-            # We would need to apply the same encoding here.
-            # prediction = MODEL.predict(data)
-            # return {"prediction": prediction[0]}
-            return {"prediction": 500000.0, "status": "Model loaded, but encoding missing (Placeholder prediction)"}
+            
+            # The MODEL is now a Pipeline, so it handles encoding automatically!
+            prediction = MODEL.predict(data)
+            return {"prediction": prediction[0], "status": "Success"}
         except Exception as e:
-             return {"prediction": 500000.0, "status": "Prediction failed", "error": str(e)}
+             return {"prediction": None, "status": "Prediction failed", "error": str(e)}
     else:
-        return {"prediction": 500000.0, "status": "Model NOT loaded (Placeholder prediction)"}
+        return {"prediction": None, "status": "Model NOT loaded"}
 
 @app.get("/")
 def read_root():
