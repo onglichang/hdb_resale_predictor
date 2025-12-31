@@ -71,7 +71,7 @@ pip install -r requirements.txt
 
 ### 2. Get Data
 This project uses the "Resale flat prices based on registration date from Jan-2017 onwards" dataset.
-*   **Manual**: Download from [Data.gov.sg](https://data.gov.sg/dataset/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards) and save to `data/raw/resale-flat-prices.csv`.
+*   **Manual**: Download from [Data.gov.sg](https://data.gov.sg/datasets?query=hdb+resale&resultId=d_8b84c4ee58e3cfc0ece0d773c8ca6abc) and save to `data/raw/resale-flat-prices.csv`.
 *   *(Note: Automated ingestion via API is implemented in `src/ingest.py` but currently falls back to manual due to API changes.)*
 
 ### 3. Run Pipeline (DVC)
