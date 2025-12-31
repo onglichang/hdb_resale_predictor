@@ -1,0 +1,5 @@
+outs:
+- md5: 7549e5039e966e2c377466f160f8eb29
+  size: 21930465
+  hash: md5
+  path: resale-flat-prices.csv

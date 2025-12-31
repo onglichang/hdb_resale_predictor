@@ -1,0 +1,29 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: venv/bin/python src/preprocess.py
+    deps:
+    - path: data/raw/resale-flat-prices.csv
+      hash: md5
+      md5: 7549e5039e966e2c377466f160f8eb29
+      size: 21930465
+    - path: src/preprocess.py
+      hash: md5
+      md5: 6e381df05732d8f4ae515efbea173ad7
+      size: 1158
+    outs:
+    - path: data/processed/resale-flat-prices-processed.csv
+      hash: md5
+      md5: c622492e928dc74200c33a81ad249257
+      size: 18621172
+  train:
+    cmd: venv/bin/python src/train.py
+    deps:
+    - path: data/processed/resale-flat-prices-processed.csv
+      hash: md5
+      md5: c622492e928dc74200c33a81ad249257
+      size: 18621172
+    - path: src/train.py
+      hash: md5
+      md5: 64a58873051c6e44f820d9512daad65f
+      size: 1693

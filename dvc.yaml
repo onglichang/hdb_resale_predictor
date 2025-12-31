@@ -1,0 +1,13 @@
+stages:
+  preprocess:
+    cmd: venv/bin/python src/preprocess.py
+    deps:
+    - src/preprocess.py
+    - data/raw/resale-flat-prices.csv
+    outs:
+    - data/processed/resale-flat-prices-processed.csv
+  train:
+    cmd: venv/bin/python src/train.py
+    deps:
+    - src/train.py
+    - data/processed/resale-flat-prices-processed.csv
