@@ -53,3 +53,4 @@ To upgrade this PoC to a production-ready system, we will execute the following 
         *   **Geolocation**: Use OneMap API to get Lat/Long for every block.
         *   **Distance Features**: Calculate distance to nearest MRT, CBD, and Primary Schools.
         *   **Economic Indicators**: Incorporate COW (Cash Over Valuation) trends or interest rates if available.
+    4.  **Smart API**: Implement the "User-Centric" schema (Postal Code -> Features) using OneMap integration.
