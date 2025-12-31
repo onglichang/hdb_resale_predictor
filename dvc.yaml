@@ -1,11 +1,21 @@
 stages:
+  validate:
+    cmd: venv/bin/python src/validate_data.py
+    deps:
+    - src/validate_data.py
+    - data/raw/resale-flat-prices.csv
+    outs:
+    - data/processed/resale-flat-prices-validated.csv
+
   preprocess:
     cmd: venv/bin/python src/preprocess.py
     deps:
     - src/preprocess.py
-    - data/raw/resale-flat-prices.csv
+    # Preprocess now consumes validated data, not raw directly
+    - data/processed/resale-flat-prices-validated.csv
     outs:
     - data/processed/resale-flat-prices-processed.csv
+
   train:
     cmd: venv/bin/python src/train.py
     deps:

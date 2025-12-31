@@ -3,14 +3,14 @@ stages:
   preprocess:
     cmd: venv/bin/python src/preprocess.py
     deps:
-    - path: data/raw/resale-flat-prices.csv
+    - path: data/processed/resale-flat-prices-validated.csv
       hash: md5
-      md5: 7549e5039e966e2c377466f160f8eb29
-      size: 21930465
+      md5: f633fb4c8d9dfd2d9ce6f0b0f3d1941f
+      size: 22502217
     - path: src/preprocess.py
       hash: md5
-      md5: e3354f61acdf68e20734753da5148c01
-      size: 995
+      md5: 8bfbdd23b2db2ce85624a4720bf8c14e
+      size: 1011
     outs:
     - path: data/processed/resale-flat-prices-processed.csv
       hash: md5
@@ -27,3 +27,19 @@ stages:
       hash: md5
       md5: 4fc948ca50e60554c4e8045812d14c50
       size: 4428
+  validate:
+    cmd: venv/bin/python src/validate_data.py
+    deps:
+    - path: data/raw/resale-flat-prices.csv
+      hash: md5
+      md5: 7549e5039e966e2c377466f160f8eb29
+      size: 21930465
+    - path: src/validate_data.py
+      hash: md5
+      md5: f451c8cb8932c04612eda35387dc0458
+      size: 1613
+    outs:
+    - path: data/processed/resale-flat-prices-validated.csv
+      hash: md5
+      md5: f633fb4c8d9dfd2d9ce6f0b0f3d1941f
+      size: 22502217

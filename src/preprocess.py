@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-RAW_DATA_PATH = "data/raw/resale-flat-prices.csv"
+RAW_DATA_PATH = "data/processed/resale-flat-prices-validated.csv"
 PROCESSED_DATA_PATH = "data/processed/resale-flat-prices-processed.csv"
 
 def preprocess():

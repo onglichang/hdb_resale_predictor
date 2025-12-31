@@ -1,0 +1,7 @@
+venv/
+.git/
+__pycache__/
+*.pyc
+.DS_Store
+data/
+# We exclude data/ but we DO include mlruns/ as that has the model.

@@ -50,8 +50,32 @@ I have implemented an MLOps workflow for HDB price prediction using DVC and MLfl
          -d '{"month": "2024-01", "town": "ANG MO KIO", "flat_type": "3 ROOM", "block": "123", "street_name": "AVE 1", "storey_range": "04 TO 06", "floor_area_sqm": 67, "flat_model": "New Generation", "lease_commence_date": 1980, "remaining_lease": "55 years"}'
     ```
 
-## Verification Results
-I verified the pipeline using a dummy dataset.
-- `dvc repro` executed successfully.
+## 4. Serving (Docker)
+
+To run the API in a production-like container:
+
+1.  **Build**:
+    ```bash
+    docker build -t hdb-predictor .
+    ```
+
+2.  **Run**:
+    ```bash
+    docker run -p 8000:8000 hdb-predictor
+    ```
+
+3.  **Test**:
+    Same curl command as above:
+    ```bash
+    curl -X POST "http://127.0.0.1:8000/predict" ...
+    ```
+
+## 5. Verification Results
+
+*   **Model Accuracy**:
+    *   MAE: ~$53k
+    *   RMSE: ~$75k
+*   **Pipeline**: Fully reproducible via `dvc repro`.
+*   **API**: Validated and containerized.
 - `mlruns` directory created (confirming MLflow logging).
 - `dvc.lock` updated.
