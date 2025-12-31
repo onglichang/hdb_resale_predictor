@@ -1,20 +1,20 @@
 # Project Status & Roadmap: HDB Resale Prediction MLOps
 
 **Date:** 2025-12-31
-**Current Stage:** Prototype / Proof of Concept (PoC)
+**Current Stage:** Prototype / PoC (Phase 1 Complete)
 
 ## 1. Current Status
 
-We have established a functional **MLOps Infrastructure Skeleton**.
+We have established a functional **MLOps Infrastructure Skeleton** with **Robust Feature Engineering**.
 
 ### ✅ Capabilities
 *   **Infrastructure**: Git, DVC (Data Version Control), and MLflow are configured and integrated.
-*   **Reproducibility**: The pipeline (`ingest` -> `preprocess` -> `train`) is defined in `dvc.yaml` and fully reproducible via `dvc repro`.
+*   **Reproducibility**: The pipeline (`ingest` -> `preprocess` -> `train`) is fully reproducible via `dvc repro`.
 *   **Experiment Tracking**: Training runs, metrics (MAE, RMSE), and model artifacts are automatically logged to MLflow.
-*   **Model Serving**: A FastAPI application (`src/serve.py`) is running and can dynamically load the latest trained model from MLflow.
+*   **Robust Serving**: The API serves predictions using a full Scikit-Learn Pipeline, automatically handling data cleaning, date parsing, and one-hot encoding for raw JSON inputs.
+*   **Feature Engineering**: Custom transformers handle date derivation (`month` -> `year`, `month_num`) automatically.
 
 ### ⚠️ Known Limitations (The "Gap" to Production)
-*   **Preprocessing Disconnect**: The serving API receives raw strings (e.g., "ANG MO KIO") but the model expects numbers. Since the preprocessing encoders (like `LabelEncoder`) are not saved/loaded, the API currently returns placeholder predictions.
 *   **Manual Ingestion**: Data ingestion relies on manual download or placement of the CSV file.
 *   **No Input Validation**: The API does not validate if input values (e.g., `town`, `flat_type`) are valid.
 
@@ -24,12 +24,12 @@ We have established a functional **MLOps Infrastructure Skeleton**.
 
 To upgrade this PoC to a production-ready system, we will execute the following phases:
 
-### Phase 1: Robust Feature Engineering (Priority: High)
+### Phase 1: Robust Feature Engineering (Priority: High) - ✅ COMPLETED
 *   **Goal**: Ensure the serving API can make real predictions by unifying preprocessing.
 *   **Steps**:
-    1.  **Refactor `preprocess.py`**: Replace manual pandas manipulation with a Scikit-Learn `Pipeline` (using `OneHotEncoder`, `StandardScaler`).
-    2.  **Artifact Persistence**: Log the *full pipeline* (Preprocessor + Model) to MLflow.
-    3.  **Update `serve.py`**: Load the full pipeline to automatically transform raw JSON inputs into predictions.
+    1.  [x] **Refactor `preprocess.py`**: Replace manual pandas manipulation with a Scikit-Learn `Pipeline`.
+    2.  [x] **Artifact Persistence**: Log the *full pipeline* (Preprocessor + Model) to MLflow.
+    3.  [x] **Update `serve.py`**: Load the full pipeline to automatically transform raw JSON inputs into predictions.
 
 ### Phase 2: Reliability & Automation (Priority: Medium)
 *   **Goal**: Remove manual steps and prevent bad data.
