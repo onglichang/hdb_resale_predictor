@@ -19,11 +19,11 @@ An end-to-end MLOps workflow for predicting Singapore HDB resale flat prices. Th
 
 ```mermaid
 graph LR
-    A[Data Source (Data.gov.sg)] -->|Ingest| B(Raw Data)
-    B -->|Validate (Pandera)| C(Validated Data)
-    C -->|Preprocess| D(Processed Data)
-    D -->|Train (Sklearn Pipeline)| E[Model Artifact (MLflow)]
-    E -->|Serve| F[FastAPI / Docker]
+    A["Data Source (Data.gov.sg)"] -->|Ingest| B("Raw Data")
+    B -->|"Validate (Pandera)"| C("Validated Data")
+    C -->|Preprocess| D("Processed Data")
+    D -->|"Train (Sklearn Pipeline)"| E["Model Artifact (MLflow)"]
+    E -->|Serve| F["FastAPI / Docker"]
 ```
 
 ## ⚡ Quick Start (Docker)
